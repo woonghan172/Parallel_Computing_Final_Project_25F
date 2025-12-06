@@ -1,4 +1,11 @@
 # Project Description
+In this project, we implement the N-Bodies Simulation.
+Our separate implementations is
+* Serial version
+* GPU Gems version
+* Thread Coarsening
+* Hyperparameter tuning (change block size, coarsening factor, etc.)
+* Hierarchical n-body simulation
 
 ### Group members
  - Po-Tsun Yu
