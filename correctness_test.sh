@@ -13,7 +13,7 @@ fi
 
 STRATEGY=$1
 TEST_NUM=$2
-OUTPUT_FILE="./build_test/output${STRATEGY}${TEST_NUM}.txt"
+OUTPUT_FILE="./build_test/output${STRATEGY}_${TEST_NUM}.txt"
 ANSWER_FILE="./tests/correctness/testout${TEST_NUM}.txt"
 TOL=1e-4
 

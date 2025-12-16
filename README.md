@@ -19,9 +19,9 @@ Our separate implementations is
 ./build.sh
 
 ### Run   
-./run_one.sh [strategy] [test case num] [output file name (optional)]  
-ex) ./run_one.sh 1 0 output.txt  
-ex) ./run_one.sh 1 0  => default output file will be as ./results/[strategy_name]_test[test_num].txt
+./test_one.sh [strategy] [test case num] [output file name (optional)]  
+ex) ./test_one.sh 1 0 output.txt  
+ex) ./test_one.sh 1 0  => default output file will be as ./results/[strategy_name]_test[test_num].txt
 
 * strategies  
 0: serial  
