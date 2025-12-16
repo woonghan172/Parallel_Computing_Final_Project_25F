@@ -8,7 +8,7 @@
 //Tile Size MUST be a multiple of Threads per Block
 
 #define COARSENING_FACTOR 4
-#define THREAD_PER_BLOCK 256
+#define THREAD_PER_BLOCK 512
 #define TILE_SIZE 512
 
 #define EPS2 1e-9f   // softening factor
