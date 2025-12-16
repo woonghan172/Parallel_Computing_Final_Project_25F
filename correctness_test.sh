@@ -8,6 +8,7 @@ if [ $# -lt 2 ] || [ $# -gt 2 ]; then
     echo "  0 : serial"
     echo "  1 : shared memory"
     echo "  2 : thread coasening"
+    echo "  3 : optimal"
     exit 1
 fi
 
@@ -33,6 +34,10 @@ case $STRATEGY in
     2)
         EXEC="./build/thread_coarsening"
         STRATEGY_NAME="thread_coarsening"
+        ;;
+    3)
+        EXEC="./build/optimal"
+        STRATEGY_NAME="optimal"
         ;;
     *)
         echo "[ERROR] Invalid strategy: $STRATEGY"

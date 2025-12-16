@@ -8,13 +8,14 @@ strategy_name = {
     0: "serial",
     1: "shared_memory",
     2: "thread_coarsening",
+    3: "optimal",
 }
 
 if len(sys.argv)==1 or sys.argv[1]=="1":
     print("[ Start correctness test ]")
 
     # strategy
-    for i in range(3): 
+    for i in range(4): 
         print("  Testing " + strategy_name[i])
         # test case
         for j in range(7): # TO DO: Change the range when test cases are done.
