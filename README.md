@@ -16,9 +16,12 @@ Our separate implementations is
 
 ## How to Build and Run the Code
 ### Build
+clone this repository to a folder with a CUDA enabled GPU (via git or vscode)
+then, in terminal:
 ./build.sh
 
-### Run   
+### Run
+in terminal:    
 ./test_one.sh [strategy] [test case num] [output file name (optional)]  
 ex) ./test_one.sh 1 0 output.txt  
 ex) ./test_one.sh 1 0  => default output file will be as ./results/[strategy_name]_test[test_num].txt
@@ -29,6 +32,7 @@ ex) ./test_one.sh 1 0  => default output file will be as ./results/[strategy_nam
 2: thread coarsening
 
 ## How to Run Correctness Tests
+e.g., in terminal:
 python3 ./run_test.py 1
 
 * How to run a single correctness test  
