@@ -51,6 +51,8 @@ TL;DR:
 python3 run_test.py
 ```
 
+More thorough instructions:
+
 ### 1. Build the Executables
 
 A general-purpose build script compiles all main strategies (0, 1, 2, 4) into the `build/` directory.
@@ -66,7 +68,7 @@ For hyperparameter tuning (Strategy 3), use the `tuning_build.sh` script, which 
 
 ### 2. Run Tests
 
-We recommend running the full testing suite ()
+We recommend running the full testing suite ([full suite](#run-automated-test-suites))
 
 #### Run a Single Test Case
 Use the `test_one.sh` script to run a specific strategy on a single test case.
