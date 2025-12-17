@@ -305,7 +305,7 @@ int main(int argc, char *argv[]) {
         (end.tv_sec - start.tv_sec) +
         (end.tv_nsec - start.tv_nsec) / 1e9;
 
-    printf("Hierarchical kernel time: %.6f seconds\n", elapsed);
+    printf("Computation time: %.6f seconds\n", elapsed);
 
     write_outputs(output_file, N, h_acc4);
 
