@@ -55,7 +55,11 @@ if len(sys.argv)==1 or sys.argv[1]=="2":
     for j in range(0,4): # TO DO: Change the range when test cases are done.
         print(f"Speed Up Test Case {j} ("+ bodies_for_speedup[j] +" bodies)")
         # strategy
-        for i in range(1, 5):
+        # Shows the speed of serial specifically on the N=100,000 case.
+        bottom = 1
+        # if (j==0):
+        #     bottom=0
+        for i in range(bottom, 5):
             if i==4 and j != 3:
                  continue
             res = subprocess.run(
