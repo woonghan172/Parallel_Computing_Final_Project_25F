@@ -9,7 +9,6 @@
 
 #define COARSENING_FACTOR 4
 #define THREAD_PER_BLOCK 512
-#define TILE_SIZE 512
 
 #define EPS2 1e-9f   // softening factor
 
@@ -137,13 +136,13 @@ withinTileCalc(int num_items, int shared_size, float *my_coord_mass, float *shar
 // --------------------------------------------------------
 
 __global__ void
-coarseningKernel(int N, int C_factor, int Tile_size, int total_threads, float *d_coord_mass, float *d_accel){
+coarseningKernel(int N, int C_factor, int total_threads, float *d_coord_mass, float *d_accel){
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
     int local_idx = threadIdx.x;
     float4 zero_vector = make_float4(0.0f, 0.0f, 0.0f, 0.0f);
 
     //Error Condition
-    if (Tile_size%blockDim.x != 0){
+    if (THREAD_PER_BLOCK%blockDim.x != 0){
         printf("Incorrect Tile Dimension\n");
         return;
     }
@@ -163,21 +162,22 @@ coarseningKernel(int N, int C_factor, int Tile_size, int total_threads, float *d
     __syncthreads();
 
     //Load tiles of Tile_size into Shared Memory
-    __shared__ float shared_tile[sizeof(float)*4*TILE_SIZE];
+    __shared__ float shared_tile[sizeof(float)*4*THREAD_PER_BLOCK];
 
-    for (int tile_iter = 0; tile_iter<((N-1)/Tile_size)+1; tile_iter++){
-        for (int block_iter = 0; block_iter<Tile_size/blockDim.x; block_iter++){
-            if (tile_iter * Tile_size + blockDim.x * block_iter + local_idx < N){
-                reinterpret_cast<float4 *>(&shared_tile[(blockDim.x * block_iter + local_idx)*4])[0] = 
-                reinterpret_cast<float4 *>(&d_coord_mass[(tile_iter * Tile_size + blockDim.x * block_iter + local_idx)*4])[0];
-            } else {
-                reinterpret_cast<float4 *>(&shared_tile[(blockDim.x * block_iter + local_idx)*4])[0] = zero_vector;
-            }
+    for (int tile_iter = 0; tile_iter<((N-1)/THREAD_PER_BLOCK)+1; tile_iter++){
+        if (tile_iter * THREAD_PER_BLOCK + local_idx < N){
+            reinterpret_cast<float4 *>(&shared_tile[(local_idx)*4])[0] = 
+            reinterpret_cast<float4 *>(&d_coord_mass[(tile_iter * THREAD_PER_BLOCK + local_idx)*4])[0];
+        } else {
+            reinterpret_cast<float4 *>(&shared_tile[(local_idx)*4])[0] = zero_vector;
         }
         __syncthreads();
 
         //Perform the Computations
-        withinTileCalc(C_factor, Tile_size, localPositions, shared_tile, localAccels);
+        for (int i = 0; i < COARSENING_FACTOR; i++)
+            for (int k = 0; k < THREAD_PER_BLOCK; k++)
+                reinterpret_cast<float4 *>(&localAccels[i*4])[0] = bodyBodyInteraction(reinterpret_cast<float4 *>(&localPositions[i*4])[0],
+                reinterpret_cast<float4 *>(&shared_tile[k*4])[0], reinterpret_cast<float4 *>(&localAccels[i*4])[0]);
         __syncthreads();
 
 
@@ -241,7 +241,7 @@ int main(int argc, char *argv[]){
     struct timespec start, end;
     clock_gettime(CLOCK_MONOTONIC, &start);
 
-    coarseningKernel<<<grid, block>>>(N, COARSENING_FACTOR, TILE_SIZE, THREAD_PER_BLOCK*num_blocks, device_coord_mass, device_accel);
+    coarseningKernel<<<grid, block>>>(N, COARSENING_FACTOR, THREAD_PER_BLOCK*num_blocks, device_coord_mass, device_accel);
     CHECK_CUDA(cudaDeviceSynchronize());
 
     //Write Memory Back to Host
