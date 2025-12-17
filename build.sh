@@ -21,7 +21,6 @@ CU_FILES=(
     "optimal.cu"
     "shared_memory.cu"
     "thread_coarsening.cu"
-    "vectorized_access.cu"
 )
 
 echo "[INFO] Compiling CUDA files..."
@@ -33,5 +32,8 @@ for cu in "${CU_FILES[@]}"; do
     echo "  → nvcc $src -o $exe"
     nvcc "$src" -o "$exe"
 done
+
+# cutlass version compile
+nvcc -O3 -std=c++17 ${CU_DIR}/cutlass.cu -I ./cutlass/include -I ./cutlass/tools/util/include -arch=sm_75 -o ${BUILD_DIR}/cutlass
 
 echo "[INFO] Build complete! Executables are in $BUILD_DIR/"
