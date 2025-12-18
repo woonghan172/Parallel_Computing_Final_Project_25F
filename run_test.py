@@ -16,6 +16,7 @@ strategy_name = {
     2: "thread_coarsening",
     3: "optimal",
     4: "hierarchical",
+    5: "cutlass",
 }
 
 bodies_for_speedup = {
@@ -29,7 +30,7 @@ if len(sys.argv)==1 or sys.argv[1]=="1":
     print("[ Start correctness test ]")
 
     # strategy
-    for i in range(5): 
+    for i in range(6):
         print("  Testing " + strategy_name[i])
         # test case
         for j in range(8): # TO DO: Change the range when test cases are done.
@@ -62,8 +63,10 @@ if len(sys.argv)==1 or sys.argv[1]=="2":
         bottom = 1
         # if (j==0):
         #     bottom=0
-        for i in range(bottom, 5):
+        for i in range(bottom, 6):
             if i==4 and j != 3:
+                 continue
+            if i==5 and j != 0:
                  continue
             res = subprocess.run(
                 ["bash", PERFORMANCE_SH, str(i), str(j)],

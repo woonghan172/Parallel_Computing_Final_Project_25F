@@ -20,6 +20,7 @@ This project implements and evaluates multiple CPU and GPU versions of an N-body
 | 2. Thread Coarsening | Each thread processes multiple bodies to reduce global memory traffic | `cu_files/thread_coarsening.cu` |
 | 3. Hyperparameter Tuning | Searches block size and coarsening factor combinations | `cu_files/optimal.cu`, `tuning_build.sh` |
 | 4. Hierarchical N-Body | Cluster-based blocking evaluated on spatially localized datasets (no force approximation) | `hierarchical_dataset.py`, `cu_files/hierarchical.cu` |
+| 5. CUTLASS-based version | NVIDIA CUTLASS-based version using dot production to calculate L2 distances | `cutlass/`, `cu_files/cutlass.cu` |
 
 ## Environment & Setup
 
@@ -79,6 +80,7 @@ The `strategy_id`s supported by this script are:
 - **2:** Thread Coarsening
 - **3:** Hyperparameter Tuning
 - **4:** Hierarchical N-Body
+- **5:** CUTLASS-based version
 
 **Syntax:**
 ```bash

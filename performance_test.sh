@@ -10,6 +10,7 @@ if [ $# -lt 2 ] || [ $# -gt 2 ]; then
     echo "  2: thread coasening"
     echo "  3: optimal"
     echo "  4: hierarchical"
+    echo "  5: cutlass"
     exit 1
 fi
 
@@ -41,6 +42,10 @@ case $STRATEGY in
     4)
         EXEC="./build/hierarchical"
         STRATEGY_NAME="hierarchical"
+        ;;
+    5)
+        EXEC="./build/cutlass"
+        STRATEGY_NAME="cutlass"
         ;;
     *)
         echo "[ERROR] Invalid strategy: $STRATEGY"
