@@ -5,7 +5,6 @@ This project implements and evaluates multiple versions of an N-body simulation.
 **Group Members:**
 - Po-Tsun Yu
 - Alexander Kachan
-- Allen Liao
 - Nicholas Drew
 - Will Han
 
