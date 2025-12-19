@@ -1,6 +1,6 @@
 # N-Body Simulation: Performance and Parallelization Study
 
-This project implements and evaluates multiple CPU and GPU versions of an N-body simulation. We explore various parallelization and optimization strategies to analyze their correctness, performance, and trade-offs on modern GPU architectures.
+This project implements and evaluates multiple versions of an N-body simulation. We explore various parallelization and optimization strategies to analyze their correctness, performance, and trade-offs on modern GPU architectures.
 
 **Group Members:**
 - Po-Tsun Yu
